@@ -5,6 +5,9 @@ Colaboradores:
   - João Paulo Passolini
   - Pedro Henrique renosto
   - Luis Eduardo Moroso
+  - Felipe Luza
+  - Léo Zoldan
+  - Arthur Marcolim
 
 # 📦 Mini Sistema de Estoque e Vendas
 
