@@ -6,15 +6,15 @@ Colaboradores:
   - Pedro Henrique renosto
   - Luis Eduardo Moroso
 
-📦 Mini Sistema de Estoque e Vendas
+# 📦 Mini Sistema de Estoque e Vendas
 
-📖 Descrição
+# 📖 Descrição
 
 Meu trabalho consiste em desenvolver um mini sistema de estoque e vendas utilizando os conceitos de Programação Orientada a Objetos (POO) e estruturas de dados clássicas: Lista, Pilha e Fila.
 
 O sistema é executado no terminal e permite interação do usuário.
 
-⚙️ Funcionalidades
+# ⚙️ Funcionalidades
 
 O usuário pode:
 
@@ -24,7 +24,7 @@ O usuário pode:
   - Realizar vendas
   - Visualizar o histórico de operações
 
-🧩 Conceitos Aplicados
+# 🧩 Conceitos Aplicados
 
 POO:
 
