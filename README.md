@@ -36,5 +36,4 @@ O sistema permite ao usuário:
 
 
 # Execução
-No terminal execute:
 python minisistema.py
