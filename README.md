@@ -1,5 +1,7 @@
 Mini Sistema de Estoque e Vendas  
 
+Matéria: ORGANIZAÇÃO E ABSTRAÇÃO NA PROGRAMAÇÃO
+
 👥 Colaboradores  
 Gustavo Vazzoler  
 João Paulo Passolini  
@@ -12,7 +14,7 @@ Arthur Marcolim
 Descrição  
 Este trabalho consiste em desenvolver um mini sistema de estoque e vendas utilizando os conceitos de Programação Orientada a Objetos (POO) e estruturas de dados clássicas: Lista, Pilha e Fila.  
 
-O sistema é executado no terminal e permite a interação do usuário.  
+O sistema é executado no terminal e permite a interação do usuário.     
 
 Funcionalidades  
 O sistema permite ao usuário:  
