@@ -1,45 +1,41 @@
-# -Estrutura-de-Dados
+# Mini Sistema de Estoque e Vendas
 
-Colaboradores:
-  - Gustavo Vazzoler
-  - João Paulo Passolini
-  - Pedro Henrique renosto
-  - Luis Eduardo Moroso
-  - Felipe Luza
-  - Léo Zoldan
-  - Arthur Marcolim
-
-# 📦 Mini Sistema de Estoque e Vendas
-
-# 📖 Descrição
-
-Meu trabalho consiste em desenvolver um mini sistema de estoque e vendas utilizando os conceitos de Programação Orientada a Objetos (POO) e estruturas de dados clássicas: Lista, Pilha e Fila.
-
-O sistema é executado no terminal e permite interação do usuário.
-
-# ⚙️ Funcionalidades
-
-O usuário pode:
-
-  - Cadastrar clientes
-  - Cadastrar produtos
-  - Listar o estoque
-  - Realizar vendas
-  - Visualizar o histórico de operações
-
-# 🧩 Conceitos Aplicados
-
-POO:
-
-Utilizei classes para modelar os elementos do sistema (Cliente, Produto, Estoque, Venda, etc.).
-
-Lista:
-Utilizada para armazenar os produtos do estoque.
-
-Pilha:
-Utilizada no histórico de operações, onde a última operação realizada fica no topo.
-
-Fila:
-Utilizada para organizar as vendas, seguindo a lógica "primeiro que entra, primeiro que sai" (FIFO).
+ 👥 Colaboradores
+- Gustavo Vazzoler  
+- João Paulo Passolini  
+- Pedro Henrique Renosto  
+- Luís Eduardo Moroso  
+- Felipe Luza  
+- Léo Zoldan  
+- Arthur Marcolim  
 
 
+# Descrição
+Este trabalho consiste em desenvolver um mini sistema de estoque e vendas utilizando os conceitos de Programação Orientada a Objetos (POO) e estruturas de dados clássicas: Lista, Pilha e Fila.  
+
+O sistema é executado no terminal e permite a interação do usuário.
+
+# Funcionalidades
+O sistema permite ao usuário:
+- Cadastrar clientes  
+- Cadastrar produtos  
+- Listar clientes e estoque  
+- Realizar vendas  
+- Visualizar fila de vendas  
+- Desfazer a última operação (pilha)  
+- Exibir valor total do estoque e de vendas realizadas  
+- Pesquisar produtos  
+- Salvar e carregar dados de arquivos `.txt`  
+
+
+# Conceitos Aplicados
+- POO: Classes `Cliente` e `Produto` para modelar os elementos do sistema.  
+- Lista: Utilizada para armazenar os produtos do estoque.  
+- Pilha: Utilizada no histórico de operações (última operação no topo → desfazer).  
+- Fila: Utilizada para organizar as vendas, seguindo a lógica FIFO (First In, First Out).  
+
+
+# Execução
+No terminal, execute:
+```bash
+python minisistema.py
