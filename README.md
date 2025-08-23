@@ -36,6 +36,5 @@ O sistema permite ao usuário:
 
 
 # Execução
-No terminal, execute:
-```bash
+No terminal execute:
 python minisistema.py
