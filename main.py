@@ -25,10 +25,15 @@ class Cliente:
                 print(f"Nome: {c.nome}, ID: {c.identidade}")
     
     def exbirClientesComValoresTotais(self):
-        pass
+        if cliente == None:
+            print("Nenhum cliente cadastrado.")
+        else:
+            for c in cliente:
+                print(f"Nome: {c.nome}, ID: {c.identidade}, Total gasto: R${c.total_gasto:.2f}")
 
     def sair(self):
-        pass
+        print("Saindo...")
+        exit()
 
 class Produto:
     def __init__(self, nome, identidade, quantidade, preco): #GUSTAVO
@@ -42,30 +47,60 @@ class Produto:
         self.id = identidade
         self.quantidade = quantidade
         self.preco = preco
+        estoque.append(self)
     
     def listarProduto(self): 
-        pass
+        if estoque == None:
+            print("Nenhum produto cadastrado.")
+        else:
+            for p in estoque:
+                print(f"Nome: {p.nome}, ID: {p.id}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
     
-    def RealizarVendas(self):
-        pass
+    def RealizarVendas(self, id_produto, qtd, id_cliente):
+        if estoque == None:
+            print("Nenhum produto cadastrado.")
+        else:
+            for p in estoque:
+                if p.identidade == id_produto:
+                    if p.quantidade >= qtd:
+                        p.quantidade -= qtd
+                        total_venda = qtd * p.preco
+                        vendas.enqueue((p.nome, qtd, total_venda, id_cliente))
+                        print(f"Venda realizada: {qtd} unidades de {p.nome} para o cliente {id_cliente}. Total: R${total_venda:.2f}")
+                    else:
+                        print(f"Quantidade insuficiente em estoque para o produto {p.nome}.")
+                    return
 
     def visualizarFilaDeVendas(self):
-        pass
+        if vendas == None:
+            print("Nenhuma venda realizada.")
+        else:
+            print(f"Fila de vendas: {vendas}")
 
     def desfazerUltimaVenda(self):
-        pass
+            vendas.dequeue()
 
     def exibirValorTotalEstoque(self):
-        pass
+        totalEstoque = sum(p.quantidade * p.preco for p in estoque)
+        print(f"Valor total do estoque: R${totalEstoque:.2f}")
 
     def exbirTotalVendas(self):
-        pass
+        totalVendas = sum(venda[2] for venda in vendas.get_items())
+        print(f"Valor total de vendas realizadas: R${totalVendas:.2f}")
 
-    def pesquisarProduto(self):
-        pass
+    def pesquisarProduto(self, nomeProduto):
+        if estoque == None:
+            print("Nenhum produto cadastrado.")
+        else:
+            for p in estoque:
+                if p.nome == nomeProduto or p.id == nomeProduto:
+                    print(f"Produto encontrado: Nome: {p.nome}, ID: {p.id}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
+                    return
+            print("Produto não encontrado.")
 
     def carregarDados(self):
         pass
+    
 def menu():
     while True:
         print("===== MENU ESTOQUE E VENDAS =====")
@@ -126,8 +161,8 @@ def menu():
             Produto.exibirClientesComValoresTotais()
 
         elif opcao == '11': #Pedro Renosto
-            valor = input("Digite o nome ou ID do produto: ")
-            Produto.pesquisarProduto(valor)
+            nomeProduto = input("Digite o nome ou ID do produto: ")
+            Produto.pesquisarProduto(nomeProduto)
 
         elif opcao == '12': #Pedro Renosto
             Produto.carregarDados()
