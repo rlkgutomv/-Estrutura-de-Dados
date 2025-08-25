@@ -1,47 +1,61 @@
-class cliente:
-    def __init__(self, nome, id):
-        self.nome = nome
-        self.id = id
-        self.listarClientes = []
+from fila import Fila
+
+cliente = []
+estoque = []
+vendas = Fila()
 
 
-    def cadastrarCliente(self, nome, id):
+
+class Cliente:
+    def __init__(self, nome, identidade):
         self.nome = nome
-        self.id = id
+        self.id = identidade
+    
+
+
+
+    def cadastrarCliente(self, nome, identidade):
+        self.nome = nome
+        self.id = identidade
 
     def listarCliente(self):
+        pass
+    
+    def exbirClientesComValoresTotais(self):
         pass
 
     def sair(self):
         pass
 
-class produto:
-    def __init__(self, nome, id, quantidade, preco):
+class Produto:
+    def __init__(self, nome, identidade, quantidade, preco): #GUSTAVO
         self.nome = nome
-        self.id = id
+        self.id = identidade
         self.quantidade = quantidade
         self.preco = preco
 
-    def cadastrarProduto(self, nome, id, quantidade, preco):
+    def cadastrarProduto(self, nome, identidade, quantidade, preco): #GUSTAVO
         self.nome = nome
-        self.id = id
+        self.id = identidade
         self.quantidade = quantidade
         self.preco = preco
     
-    def listarProduto(self):
+    def listarProduto(self): 
+        pass
     
     def RealizarVendas(self):
+        pass
 
-    def visualizarFila(self):
+    def visualizarFilaDeVendas(self):
         pass
 
     def desfazerUltimaVenda(self):
         pass
 
-    def exibirTotalEstoque(self):
+    def exibirValorTotalEstoque(self):
         pass
 
-    def exbirtotalVendas(self):
+    def exbirTotalVendas(self):
         pass
 
     def pesquisarProduto(self):
@@ -49,51 +63,67 @@ class produto:
 
     def carregarDados(self):
         pass
+def menu():
+    while True:
+        print("===== MENU ESTOQUE E V =====")
+        print("1. Cadastrar cliente")
+        print("2. Listar clientes")
+        print("3. Cadastrar produto")
+        print("4. Listar produtos do estoque")
+        print("5. Realizar venda")
+        print("6. Visualizar fila de vendas")
+        print("7. Desfazer última operação (pilha)")
+        print("8. Exibir valor total do estoque")
+        print("9. Exibir valor total de vendas realizadas")
+        print("10. Exibir clientes e valores totais gastos")
+        print("11. Pesquisar produto por nome ou ID")
+        print("12. Carregar dados de clientes e produtos de arquivos")
+        print("13. Sair")
+        opcao = input("Escolha uma opção: ")
 
-    def menu(self):
-        while True:
-            print("\n=== Mini Sistema de Estoque e Vendas ===")
-            print("1. Cadastrar cliente")
-            print("2. Listar clientes")
-            print("3. Cadastrar produto")
-            print("4. Listar produtos do estoque")
-            print("5. Realizar venda")
-            print("6. Visualizar fila de vendas")
-            print("7. Desfazer última operação (pilha)")
-            print("8. Exibir valor total do estoque")
-            print("9. Exibir valor total de vendas realizadas")
-            print("10. Exibir clientes e valores totais gastos")
-            print("11. Sair")
-            opcao = input("Escolha uma opção: ")
+        if opcao == '1':
+            pass
 
-            if opcao == '1':
-                
-            elif opcao == '2':
-                
-            elif opcao == '3':
-                
-            elif opcao == '4':
-                
-            elif opcao == '5':
-                
-            elif opcao == '6':
-                
-            elif opcao == '7':
-                
-            elif opcao == '8':
-               
-            elif opcao == '9':
-                
-            elif opcao == '10':
-            
-            elif opcao == '11':
+        elif opcao == '2':
+            pass
 
-            elif opcao == '12':
-                
-            elif opcao == '13':
-            else:
-                print("Opção inválida!")
+        elif opcao == '3':
+            pass
+
+        elif opcao == '4':
+            pass
+
+        elif opcao == '5':
+            pass
+
+        elif opcao == '6':
+            pass
+
+        elif opcao == '7':
+            pass
+
+        elif opcao == '8':
+            pass
+
+        elif opcao == '9':
+            pass
+
+        elif opcao == '10':
+            pass
+
+        elif opcao == '11':
+            pass
+
+        elif opcao == '12':
+            pass
+
+        elif opcao == '13':
+            pass
+
+        else:
+            print("Opção inválida!")
 
 if __name__ == "__main__":
+    menu()
 
 
