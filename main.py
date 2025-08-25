@@ -84,49 +84,63 @@ def menu():
         print("13. Sair")
         opcao = input("Escolha uma opção: ")
 
-        if opcao == '1':
-            pass
+        if opcao == '1': #Pedro Renosto
+            nome = input("Nome do cliente: ")
+            identidade = input("ID do cliente: ")
+            c = Cliente(nome, identidade)
+            c.cadastrarCliente()
 
-        elif opcao == '2':
-            pass
+        elif opcao == '2': #Pedro Renosto
+            Cliente.listarCliente()
 
-        elif opcao == '3':
-            pass
+        elif opcao == '3': #Pedro Renosto
+            nome = input("Nome do produto: ")
+            identidade = input("ID do produto: ")
+            quantidade = int(input("Quantidade: "))
+            preco = float(input("Preço: "))
+            p = Produto(nome, identidade, quantidade, preco)
+            p.cadastrarProduto()
 
-        elif opcao == '4':
-            pass
+        elif opcao == '4': #Pedro Renosto
+            Produto.listarProduto()
 
-        elif opcao == '5':
-            pass
+        elif opcao == '5': #Pedro Renosto
+            id_produto = input("ID do produto: ")
+            qtd = int(input("Quantidade: "))
+            id_cliente = input("ID do cliente: ")
+            Produto.realizarVenda(id_produto, qtd, id_cliente)
 
-        elif opcao == '6':
-            pass
+        elif opcao == '6': #Pedro Renosto
+            Produto.visualizarFilaDeVendas()
 
-        elif opcao == '7':
-            pass
+        elif opcao == '7': #Pedro Renosto
+            Produto.desfazerUltimaVenda()
 
-        elif opcao == '8':
-            pass
+        elif opcao == '8': #Pedro Renosto
+            Produto.exibirValorTotalEstoque()
 
-        elif opcao == '9':
-            pass
+        elif opcao == '9': #Pedro Renosto
+            Produto.exibirTotalVendas()
 
-        elif opcao == '10':
-            pass
+        elif opcao == '10': #Pedro Renosto
+            Produto.exibirClientesComValoresTotais()
 
-        elif opcao == '11':
-            pass
+        elif opcao == '11': #Pedro Renosto
+            valor = input("Digite o nome ou ID do produto: ")
+            Produto.pesquisarProduto(valor)
 
-        elif opcao == '12':
-            pass
+        elif opcao == '12': #Pedro Renosto
+            Produto.carregarDados()
 
-        elif opcao == '13':
-            pass
+        elif opcao == '13': #Pedro Renosto
+            print("Saindo...")
+            break
 
-        else:
+        else: #Pedro Renosto
             print("Opção inválida!")
 
-if __name__ == "__main__":
+if __name__ == "__main__": #Pedro Renosto
     menu()
+
 
 
