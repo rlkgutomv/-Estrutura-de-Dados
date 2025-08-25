@@ -9,23 +9,23 @@ vendas = Fila()
 class Cliente:
     def __init__(self, nome, identidade):
         self.nome = nome
-        self.id = identidade
+        self.identidade = identidade
 
 
     def cadastrarCliente(self, nome, identidade):
         self.nome = nome
-        self.id = identidade
+        self.identidade = identidade
         cliente.append(self)
 
     def listarCliente(self):
-        if cliente == None:
+        if not cliente:
             print("Nenhum cliente cadastrado.")
         else:
             for c in cliente:
                 print(f"Nome: {c.nome}, ID: {c.identidade}")
     
     def exbirClientesComValoresTotais(self):
-        if cliente == None:
+        if not cliente:
             print("Nenhum cliente cadastrado.")
         else:
             for c in cliente:
@@ -38,13 +38,13 @@ class Cliente:
 class Produto:
     def __init__(self, nome, identidade, quantidade, preco): #GUSTAVO
         self.nome = nome
-        self.id = identidade
+        self.identidade = identidade
         self.quantidade = quantidade
         self.preco = preco
 
     def cadastrarProduto(self, nome, identidade, quantidade, preco): #GUSTAVO
         self.nome = nome
-        self.id = identidade
+        self.identidade = identidade
         self.quantidade = quantidade
         self.preco = preco
         estoque.append(self)
@@ -100,7 +100,7 @@ class Produto:
 
     def carregarDados(self):
         pass
-    
+
 def menu():
     while True:
         print("===== MENU ESTOQUE E VENDAS =====")
@@ -121,9 +121,9 @@ def menu():
 
         if opcao == '1': #Pedro Renosto
             nome = input("Nome do cliente: ")
-            identidade = input("ID do cliente: ")
+            identidade = int(input("ID do cliente: "))
             c = Cliente(nome, identidade)
-            c.cadastrarCliente()
+            c.cadastrarCliente(nome, identidade)
 
         elif opcao == '2': #Pedro Renosto
             Cliente.listarCliente()
