@@ -10,16 +10,19 @@ class Cliente:
     def __init__(self, nome, identidade):
         self.nome = nome
         self.id = identidade
-    
-
 
 
     def cadastrarCliente(self, nome, identidade):
         self.nome = nome
         self.id = identidade
+        cliente.append(self)
 
     def listarCliente(self):
-        pass
+        if cliente == None:
+            print("Nenhum cliente cadastrado.")
+        else:
+            for c in cliente:
+                print(f"Nome: {c.nome}, ID: {c.identidade}")
     
     def exbirClientesComValoresTotais(self):
         pass
@@ -65,7 +68,7 @@ class Produto:
         pass
 def menu():
     while True:
-        print("===== MENU ESTOQUE E V =====")
+        print("===== MENU ESTOQUE E VENDAS =====")
         print("1. Cadastrar cliente")
         print("2. Listar clientes")
         print("3. Cadastrar produto")
