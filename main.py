@@ -1,4 +1,5 @@
 from fila import Fila
+from pilha import Pilha
 
 cliente = [] 
 estoque = [] 
