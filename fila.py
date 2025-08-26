@@ -2,7 +2,6 @@ class Fila:
 
     def __init__(self):
         self._items = []
-        print("Fila criada")
 
     def enqueue(self, item): #Enfileirar (adiciona um dado no início da lista)
         if item == None:
