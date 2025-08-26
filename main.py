@@ -17,10 +17,6 @@ class Cliente:
         self.identidade = identidade
         cliente.append(self)
 
-    def sair(self):
-        print("Saindo...")
-        exit()
-
 class Produto:
     def __init__(self, nome, identidade, quantidade, preco): #GUSTAVO
         self.nome = nome
@@ -28,19 +24,14 @@ class Produto:
         self.quantidade = quantidade
         self.preco = preco
 
-    def cadastrarProduto(self, nome, identidade, quantidade, preco): #GUSTAVO
-        self.nome = nome
-        self.identidade = identidade
-        self.quantidade = quantidade
-        self.preco = preco
-        estoque.append(self)
-    
-    def listarProduto(self): 
-        if estoque == None:
-            print("Nenhum produto cadastrado.")
+    def cadastrarProduto(self): #GUSTAVO
+        if self.identidade in [p.identidade for p in estoque]:
+            print("Produto com ID já cadastrado.")
+            return False
         else:
-            for p in estoque:
-                print(f"Nome: {p.nome}, ID: {p.id}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
+            estoque.append(self)
+            print("Produto cadastrado com sucesso!")
+            return True
     
     def RealizarVendas(self, id_produto, qtd, id_cliente):
         if estoque == None:
@@ -105,9 +96,13 @@ def menu():
         print("13. Sair")
         opcao = input("Escolha uma opção: ")
 
-        if opcao == '1': #Pedro Renosto
-            nome = input("Nome do cliente: ")
-            identidade = int(input("ID do cliente: "))
+        if opcao == '1': 
+            nome =input("Nome do cliente: ")
+            try:
+                identidade = int(input("ID do cliente: "))
+                
+            except ValueError:
+                print("ID inválido. Por favor, insira um valor numérico.")
             c = Cliente(nome, identidade)
             c.cadastrarCliente(nome, identidade)
 
@@ -119,16 +114,34 @@ def menu():
                     print(f"Nome: {c.nome}, ID: {c.identidade}")    
 
 
-        elif opcao == '3': #Pedro Renosto
+        elif opcao == '3':
             nome = input("Nome do produto: ")
-            identidade = input("ID do produto: ")
-            quantidade = int(input("Quantidade: "))
-            preco = float(input("Preço: "))
+            try:
+                identidade = int(input("ID do produto: "))
+            except ValueError:
+                print("ID inválido. Por favor, insira um valor numérico.")
+                continue
+            try:
+                quantidade = int(input("Quantidade: "))
+            except ValueError:
+                print("Quantidade inválida. Por favor, insira um valor numérico.")
+                continue
+            try:
+                preco = float(input("Preço: "))
+            except ValueError:
+                print("Preço inválido. Por favor, insira um valor numérico.")
+                continue
+
             p = Produto(nome, identidade, quantidade, preco)
-            p.cadastrarProduto(nome, identidade, quantidade, preco)
+            p.cadastrarProduto()
+                
 
         elif opcao == '4': #Pedro Renosto
-            produto.listarProduto()
+            if estoque == None:
+                print("Nenhum produto cadastrado.")
+            else:
+                for p in estoque:
+                    print(f"Nome: {p.nome}, ID: {p.id}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
 
         elif opcao == '5': #Pedro Renosto
             id_produto = input("ID do produto: ")
@@ -160,7 +173,7 @@ def menu():
 
         elif opcao == '13': #Pedro Renosto
             print("Saindo...")
-            break
+            exit()
 
         else: #Pedro Renosto
             print("Opção inválida!")
