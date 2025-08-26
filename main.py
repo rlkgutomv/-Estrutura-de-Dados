@@ -56,12 +56,6 @@ class Produto:
                     return
         print("Produto não encontrado.")
 
-    def visualizarFilaDeVendas(self):
-        if vendas == None:
-            print("Nenhuma venda realizada.")
-        else:
-            print(f"Fila de vendas: {vendas}")
-
     def desfazerUltimaVenda(self):
             vendas.dequeue()
 
@@ -69,9 +63,9 @@ class Produto:
         totalEstoque = sum(p.quantidade * p.preco for p in estoque)
         print(f"Valor total do estoque: R${totalEstoque:.2f}")
 
-    def exbirTotalVendas(self):
-        totalVendas = sum(venda[2] for venda in vendas.get_items())
-        print(f"Valor total de vendas realizadas: R${totalVendas:.2f}")
+    def exibirTotalVendas(vendas):
+        total = sum(venda[1] for venda in vendas.get_items())
+        print(f"Valor total de vendas realizadas: R${total:.2f}")
 
     def pesquisarProduto(self, nomeProduto):
         if estoque == None:
@@ -101,7 +95,7 @@ def menu():
         print("10. Exibir clientes e valores totais gastos")
         print("11. Pesquisar produto por nome ou ID")
         print("12. Carregar dados de clientes e produtos de arquivos")
-        print("13. Sair")
+        print("14. Sair")
         print("==================================")
         opcao = input("Escolha uma opção: ")
         print("==================================")
@@ -157,29 +151,41 @@ def menu():
             info.RealizarVendas(identidadeProduto, quantidade, identidadeCliente)
             
 
-        elif opcao == '6': 
-            Produto.visualizarFilaDeVendas()
+        elif opcao == '6':
+            if not vendas.get_items():
+                print("Nenhuma venda realizada.")
+            else:
+                print("Fila de vendas (Cliente ID, Valor da Venda):")
+                for venda in vendas.get_items():
+                    print(venda)
 
         elif opcao == '7': 
-            Produto.desfazerUltimaVenda()
+            Produto.desfazerUltimaVenda() #GUSTAVO
 
         elif opcao == '8': 
-            Produto.exibirValorTotalEstoque()
+            if not estoque:
+                print("Nenhum produto cadastrado.")
+            else:
+                totalEstoque = Produto("", 0, 0, 0)
+                Produto.exibirValorTotalEstoque(totalEstoque) #LUIS
 
-        elif opcao == '9': 
-            Produto.exibirTotalVendas()
+        elif opcao == '9':
+            if not vendas:
+                print("Nenhuma venda realizada.")
+            else:
+                Produto.exibirTotalVendas(vendas) #LUIS
 
         elif opcao == '10': 
-            Produto.exibirClientesComValoresTotais()
+            Produto.exibirClientesComValoresTotais() #PEDRO
 
         elif opcao == '11': 
-            nomeProduto = input("Digite o nome ou ID do produto: ")
+            nomeProduto = input("Digite o nome ou ID do produto: ") #PEDRO
             Produto.pesquisarProduto(nomeProduto)
 
-        elif opcao == '12': 
+        elif opcao == '12': #GUSTAVO
             Produto.carregarDados()
 
-        elif opcao == '13': 
+        elif opcao == '14': #LUIS
             print("Saindo...")
             exit()
 
