@@ -17,20 +17,6 @@ class Cliente:
         self.identidade = identidade
         cliente.append(self)
 
-    def listarCliente(self):
-        if not cliente:
-            print("Nenhum cliente cadastrado.")
-        else:
-            for c in cliente:
-                print(f"Nome: {c.nome}, ID: {c.identidade}")
-    
-    def exbirClientesComValoresTotais(self):
-        if not cliente:
-            print("Nenhum cliente cadastrado.")
-        else:
-            for c in cliente:
-                print(f"Nome: {c.nome}, ID: {c.identidade}, Total gasto: R${c.total_gasto:.2f}")
-
     def sair(self):
         print("Saindo...")
         exit()
@@ -125,8 +111,13 @@ def menu():
             c = Cliente(nome, identidade)
             c.cadastrarCliente(nome, identidade)
 
-        elif opcao == '2': #Pedro Renosto
-            Cliente.listarCliente()
+        elif opcao == '2':
+            if not cliente:
+             print("Nenhum cliente cadastrado.")
+            else:
+                for c in cliente:
+                    print(f"Nome: {c.nome}, ID: {c.identidade}")    
+
 
         elif opcao == '3': #Pedro Renosto
             nome = input("Nome do produto: ")
@@ -134,10 +125,10 @@ def menu():
             quantidade = int(input("Quantidade: "))
             preco = float(input("Preço: "))
             p = Produto(nome, identidade, quantidade, preco)
-            p.cadastrarProduto()
+            p.cadastrarProduto(nome, identidade, quantidade, preco)
 
         elif opcao == '4': #Pedro Renosto
-            Produto.listarProduto()
+            produto.listarProduto()
 
         elif opcao == '5': #Pedro Renosto
             id_produto = input("ID do produto: ")
