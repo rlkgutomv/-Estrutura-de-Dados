@@ -4,6 +4,7 @@ from pilha import Pilha
 cliente = [] 
 estoque = [] 
 vendas = Fila() 
+historico = Pilha()
 
 
 
@@ -39,7 +40,6 @@ class Produto:
             estoque.append(self)
             print("Produto cadastrado com sucesso!")
             
-    
     def RealizarVendas(self, identidadeProduto, quantidade, identidadeCliente):
         if identidadeCliente not in [c.identidadeCliente for c in cliente]:
                 print("Cliente não cadastrado. Cadastre o cliente antes de realizar uma venda.")
@@ -49,7 +49,9 @@ class Produto:
                 if p.quantidade >= quantidade:
                     p.quantidade -= quantidade
                     totalVenda = quantidade * p.preco
-                    vendas.enqueue((identidadeCliente,totalVenda))
+                    venda = (identidadeCliente, totalVenda)
+                    vendas.enqueue(venda)
+                    historico.push(venda)
                     print(f"Venda realizada: Cliente ID {identidadeCliente}, Produto ID {identidadeProduto}, Quantidade {quantidade}, Total R${totalVenda:.2f}")
                     return
                 else:
@@ -57,8 +59,6 @@ class Produto:
                     return
         print("Produto não encontrado.")
 
-    def desfazerUltimaVenda(self):
-            vendas.dequeue()
 
     def exibirValorTotalEstoque(self):
         totalEstoque = sum(p.quantidade * p.preco for p in estoque)
@@ -90,13 +90,13 @@ def menu():
         print("4. Listar produtos do estoque")
         print("5. Realizar venda")
         print("6. Visualizar fila de vendas")
-        print("7. Desfazer última operação (pilha)")
+        print("7. Desfazer última operação")
         print("8. Exibir valor total do estoque")
         print("9. Exibir valor total de vendas realizadas")
         print("10. Exibir clientes e valores totais gastos")
         print("11. Pesquisar produto por nome ou ID")
         print("12. Carregar dados de clientes e produtos de arquivos")
-        print("14. Sair")
+        print("13. Sair")
         print("==================================")
         opcao = input("Escolha uma opção: ")
         print("==================================")
@@ -160,33 +160,40 @@ def menu():
                 for venda in vendas.get_items():
                     print(venda)
 
-        elif opcao == '7': 
-            Produto.desfazerUltimaVenda() #GUSTAVO
+        elif opcao == '7':
+            if historico.is_empty():
+                print("Nenhuma venda para desfazer.")
+                return
+    
+            ultimaVenda = historico.pop()
+            if ultimaVenda in vendas.get_items():
+                vendas.get_items().remove(ultimaVenda)
+                print(f"Venda desfeita: {ultimaVenda}")
 
         elif opcao == '8': 
             if not estoque:
                 print("Nenhum produto cadastrado.")
             else:
                 totalEstoque = Produto("", 0, 0, 0)
-                Produto.exibirValorTotalEstoque(totalEstoque) #LUIS
+                Produto.exibirValorTotalEstoque(totalEstoque) 
 
         elif opcao == '9':
             if not vendas:
                 print("Nenhuma venda realizada.")
             else:
-                Produto.exibirTotalVendas(vendas) #LUIS
+                Produto.exibirTotalVendas(vendas)
 
         elif opcao == '10': 
-            Produto.exibirClientesComValoresTotais() #PEDRO
+            Produto.exibirClientesComValoresTotais() 
 
         elif opcao == '11': 
-            nomeProduto = input("Digite o nome ou ID do produto: ") #PEDRO
+            nomeProduto = input("Digite o nome ou ID do produto: ") 
             Produto.pesquisarProduto(nomeProduto)
 
-        elif opcao == '12': #GUSTAVO
+        elif opcao == '12': 
             Produto.carregarDados()
 
-        elif opcao == '14': #LUIS
+        elif opcao == '13':
             print("Saindo...")
             exit()
 
