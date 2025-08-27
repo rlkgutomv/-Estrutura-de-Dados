@@ -3,28 +3,28 @@ class Fila:
         def __init__(self):
             self._items = []
 
-        def enqueue(self, item): #Enfileirar (adiciona um dado no início da lista)
+        def enqueue(self, item): 
             if item == None:
                 raise ValueError("Item nao pode ser None")
             
             self._items.insert(0, item)
 
-        def dequeue(self): #Desenfileirar (remove o ultimo dado da lista)
+        def dequeue(self): 
             if self.is_empty():
                 raise IndexError("Fila está vazia")
             
             return self._items.pop()
 
-        def front(self): #Primeiro da Fila (ultimo dado da lista)
+        def front(self): 
             if self.is_empty():
                 raise IndexError("Fila está vazia")
             
             return self._items[-1]
         
-        def is_empty(self): #Verifica se a Fila esta vazia
+        def is_empty(self): 
             return len(self._items) == 0
         
-        def size(self): #Retorna o tamanho da Fila
+        def size(self): 
             return len(self._items)
         
         def __str__(self):

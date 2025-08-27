@@ -13,15 +13,12 @@ class Cliente:
         self.identidadeCliente = identidadeCliente
 
     def cadastrarCliente(self, nome, identidadeCliente):
-        self.identidadeCliente = identidadeCliente
-        self.nome = nome
-        if self.identidadeCliente in [c.identidadeCliente for c in cliente]:
-            print("Cliente com ID já cadastrado.")
+        if identidadeCliente in [c.identidadeCliente for c in cliente]:
+            print("⚠️ Cliente com ID já cadastrado!")
             return False
-        else:
-            cliente.append(self)
-            print("Cliente cadastrado com sucesso!")
-            return True
+        cliente.append(self)
+        print("✅ Cliente cadastrado com sucesso!")
+        return True
 
 
 class Produto:
@@ -33,16 +30,15 @@ class Produto:
 
     def cadastrarProduto(self):
         if self.identidadeProduto in [p.identidadeProduto for p in estoque]:
-            print("Produto com ID já cadastrado.")
+            print("⚠️ Produto com ID já cadastrado!")
             return False
-        else:
-            estoque.append(self)
-            print("Produto cadastrado com sucesso!")
-            return True
+        estoque.append(self)
+        print("📦 Produto cadastrado com sucesso!")
+        return True
             
     def RealizarVendas(self, identidadeProduto, quantidade, identidadeCliente):
         if identidadeCliente not in [c.identidadeCliente for c in cliente]:
-            print("Cliente não cadastrado. Cadastre o cliente antes de realizar uma venda.")
+            print("⚠️ Cliente não cadastrado!")
             return
         for p in estoque:
             if p.identidadeProduto == identidadeProduto:
@@ -52,204 +48,168 @@ class Produto:
                     venda = (identidadeCliente, totalVenda)
                     vendas.enqueue(venda)
                     historico.push(venda)
-                    print(f"Venda realizada: Cliente ID {identidadeCliente}, Produto ID {identidadeProduto}, Quantidade {quantidade}, Total R${totalVenda:.2f}")
+                    print(f"💸 Venda realizada! Cliente ID {identidadeCliente} → Produto {p.nome} x{quantidade} → Total R${totalVenda:.2f}")
                     return
                 else:
-                    print("Quantidade insuficiente em estoque.")
+                    print("⚠️  Quantidade insuficiente em estoque.")
                     return
-        print("Produto não encontrado.")
+        print("❌ Produto não encontrado.")
 
     def exibirValorTotalEstoque(self):
         totalEstoque = sum(p.quantidade * p.preco for p in estoque)
-        print(f"Valor total do estoque: R${totalEstoque:.2f}")
+        print(f"📊 Valor total do estoque: R${totalEstoque:.2f}")
 
     def exibirTotalVendas(vendas):
         total = sum(venda[1] for venda in vendas.get_items())
-        print(f"Valor total de vendas realizadas: R${total:.2f}")
+        print(f"📊 Valor total de vendas realizadas: R${total:.2f}")
 
     def pesquisarProduto(self, nomeProduto):
         if not estoque:
-            print("Nenhum produto cadastrado.")
+            print("📦 Nenhum produto cadastrado.")
             return
         for p in estoque:
             if p.nome.lower() == nomeProduto.lower() or str(p.identidadeProduto) == str(nomeProduto):
-                print(f"Produto encontrado: Nome: {p.nome}, ID: {p.identidadeProduto}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
+                print(f"🔎 Produto encontrado → {p.nome} (ID {p.identidadeProduto}) | {p.quantidade} und. | R${p.preco:.2f}")
                 return
-        print("Produto não encontrado.")
+        print("❌ Produto não encontrado.")
     
     @staticmethod
     def exibirClientesComValoresTotais():
         if not vendas.get_items():
-            print("Nenhuma venda realizada.")
+            print("📊 Nenhuma venda realizada.")
             return
         totais = {}
         for cliente_id, valor in vendas.get_items():
             totais[cliente_id] = totais.get(cliente_id, 0) + valor
+        print("===== 🧾 Gastos por Cliente =====")
         for cliente_id, total in totais.items():
             nome = next((c.nome for c in cliente if c.identidadeCliente == cliente_id), "Desconhecido")
-            print(f"Cliente {nome} (ID {cliente_id}) gastou R${total:.2f}")
+            print(f"👤 {nome} (ID {cliente_id}) → R${total:.2f}")
 
-    def carregarDados(self):
-        # Carregar clientes
-        try:
-            with open("clientes.txt", "r", encoding="utf-8") as f:
-                for linha in f:
-                    partes = linha.strip().split(";")
-                    if len(partes) == 2:
-                        nome = partes[0]
-                        identidadeCliente = int(partes[1])
-                        if identidadeCliente not in [c.identidadeCliente for c in cliente]:
-                            cliente.append(Cliente(nome, identidadeCliente))
-            print("Clientes carregados com sucesso!")
-        except FileNotFoundError:
-            print("Arquivo clientes.txt não encontrado.")
-
-        # Carregar produtos
-        try:
-            with open("produtos.txt", "r", encoding="utf-8") as f:
-                for linha in f:
-                    partes = linha.strip().split(";")
-                    if len(partes) == 4:
-                        nome = partes[0]
-                        identidadeProduto = int(partes[1])
-                        quantidade = int(partes[2])
-                        preco = float(partes[3])
-                        if identidadeProduto not in [p.identidadeProduto for p in estoque]:
-                            estoque.append(Produto(nome, identidadeProduto, quantidade, preco))
-            print("Produtos carregados com sucesso!")
-        except FileNotFoundError:
-            print("Arquivo produtos.txt não encontrado.")
-
-    @staticmethod
-    def salvarDados():
-        # Salvar clientes
+    def salvarDados(self):
         with open("clientes.txt", "w", encoding="utf-8") as f:
             for c in cliente:
-                f.write(f"{c.nome};{c.identidadeCliente}\n")
-        # Salvar produtos
+                f.write(f"{c.nome},{c.identidadeCliente}\n")
         with open("produtos.txt", "w", encoding="utf-8") as f:
             for p in estoque:
-                f.write(f"{p.nome};{p.identidadeProduto};{p.quantidade};{p.preco}\n")
-        print("Dados salvos com sucesso em clientes.txt e produtos.txt!")
+                f.write(f"{p.nome},{p.identidadeProduto},{p.quantidade},{p.preco}\n")
+        print("💾 Dados salvos com sucesso!")
 
 
 def menu():
     while True:
-        print("===== MENU ESTOQUE E VENDAS =====")
-        print("1. Cadastrar cliente")
-        print("2. Listar clientes")
-        print("3. Cadastrar produto")
-        print("4. Listar produtos do estoque")
-        print("5. Realizar venda")
-        print("6. Visualizar fila de vendas")
-        print("7. Desfazer última operação")
-        print("8. Exibir valor total do estoque")
-        print("9. Exibir valor total de vendas realizadas")
-        print("10. Exibir clientes e valores totais gastos")
-        print("11. Pesquisar produto por nome ou ID")
-        print("12. Carregar dados de clientes e produtos de arquivos")
-        print("13. Salvar dados de clientes e produtos em arquivos")
-        print("14. Sair")
-        print("==================================")
-        opcao = input("Escolha uma opção: ")
-        print("==================================")
+        print("\n================= 📊 MENU ESTOQUE E VENDAS =================")
+        print("1️⃣  Cadastrar cliente")
+        print("2️⃣  Listar clientes")
+        print("3️⃣  Cadastrar produto")
+        print("4️⃣  Listar produtos do estoque")
+        print("5️⃣  Realizar venda")
+        print("6️⃣  Visualizar fila de vendas")
+        print("7️⃣  Desfazer última operação")
+        print("8️⃣  Exibir valor total do estoque")
+        print("9️⃣  Exibir valor total de vendas realizadas")
+        print("🔟 Exibir clientes e valores totais gastos")
+        print("1️⃣ 1️⃣  Pesquisar produto por nome ou ID")
+        print("1️⃣ 2️⃣  Salvar dados no SISTEMA ")
+        print("1️ 3️⃣  Sair ❌")
+        print("============================================================")
+        
+        opcao = input("👉 Escolha uma opção: ")
 
-        if opcao == '1': 
-            nome = input("Nome do cliente: ")
+        if opcao == '1':
+            nome = input("👤 Nome do cliente: ")
             try:
-                identidadeCliente = int(input("ID do cliente: "))
+                identidadeCliente = int(input("🆔 ID do cliente: "))
             except ValueError:
-                print("ID inválido. Por favor, insira um valor numérico.")
+                print("⚠️ ID inválido.")
                 continue
             c = Cliente(nome, identidadeCliente)
             c.cadastrarCliente(nome, identidadeCliente)
 
-        elif opcao == '2': 
+        elif opcao == '2':
             if not cliente:
-                print("Nenhum cliente cadastrado.")
+                print("📋 Nenhum cliente cadastrado.")
             else:
+                print("===== 📋 Lista de Clientes =====")
                 for c in cliente:
-                    print(f"Nome: {c.nome}, ID: {c.identidadeCliente}")    
+                    print(f"👤 {c.nome} (ID {c.identidadeCliente})")    
 
         elif opcao == '3':
-            nome = input("Nome do produto: ")
+            nome = input("📦 Nome do produto: ")
             try:
-                identidadeProduto = int(input("ID do produto: "))
-                quantidade = int(input("Quantidade: "))
-                preco = float(input("Preço: "))
+                identidadeProduto = int(input("🆔 ID do produto: "))
+                quantidade = int(input("🔢 Quantidade: "))
+                preco = float(input("💸 Preço: "))
             except ValueError:
-                print("Erro: insira valores numéricos válidos para ID, quantidade e preço.")
+                print("⚠️ Valores inválidos.")
             else:
                 p = Produto(nome, identidadeProduto, quantidade, preco)
                 p.cadastrarProduto()
-                
+
         elif opcao == '4':
             if not estoque:
-                print("Nenhum produto cadastrado.")
+                print("📦 Nenhum produto cadastrado.")
             else:
+                print("===== 📦 Produtos em Estoque =====")
                 for p in estoque:
-                    print(f"Nome: {p.nome}, ID: {p.identidadeProduto}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
+                    print(f"{p.nome} (ID {p.identidadeProduto}) → {p.quantidade} und. - R${p.preco:.2f}")
 
         elif opcao == '5':
             try:
-                quantidade = int(input("Digite a quantidade: "))
-                identidadeCliente = int(input("Digite o ID do cliente: "))
-                identidadeProduto = int(input("Digite o ID do produto: "))
+                quantidade = int(input("🔢 Quantidade: "))
+                identidadeCliente = int(input("🆔 ID do cliente: "))
+                identidadeProduto = int(input("🆔 ID do produto: "))
             except ValueError:
-                print("Erro: insira valores numéricos válidos para ID e quantidade.")
+                print("⚠️ Valores inválidos.")
                 continue
             info = Produto("", identidadeProduto, 0, 0)
             info.RealizarVendas(identidadeProduto, quantidade, identidadeCliente)
-            
+
         elif opcao == '6':
             if not vendas.get_items():
-                print("Nenhuma venda realizada.")
+                print("📋 Nenhuma venda realizada.")
             else:
-                print("Fila de vendas (Cliente ID, Valor da Venda):")
+                print("===== 🛒 Fila de Vendas =====")
                 for venda in vendas.get_items():
                     print(venda)
 
         elif opcao == '7':
             if historico.is_empty():
-                print("Nenhuma venda para desfazer.")
+                print("⚠️  Nenhuma venda para desfazer.")
                 continue
             ultimaVenda = historico.pop()
             if ultimaVenda in vendas.get_items():
                 vendas.get_items().remove(ultimaVenda)
-                print(f"Venda desfeita: {ultimaVenda}")
+                print(f"↩️ Venda desfeita: {ultimaVenda}")
 
-        elif opcao == '8': 
+        elif opcao == '8':
             if not estoque:
-                print("Nenhum produto cadastrado.")
+                print("📦 Nenhum produto cadastrado.")
             else:
-                totalEstoque = Produto("", 0, 0, 0)
-                Produto.exibirValorTotalEstoque(totalEstoque) 
+                Produto("", 0, 0, 0).exibirValorTotalEstoque()
 
         elif opcao == '9':
             if not vendas.get_items():
-                print("Nenhuma venda realizada.")
+                print("📊 Nenhuma venda realizada.")
             else:
                 Produto.exibirTotalVendas(vendas)
 
-        elif opcao == '10': 
-            Produto.exibirClientesComValoresTotais() 
+        elif opcao == '10':
+            Produto.exibirClientesComValoresTotais()
             
-        elif opcao == '11': 
-            nomeProduto = input("Digite o nome ou ID do produto: ") 
+        elif opcao == '11':
+            nomeProduto = input("🔎 Digite o nome ou ID do produto: ")
             Produto("", 0, 0, 0).pesquisarProduto(nomeProduto)
 
-        elif opcao == '12': 
-            Produto("", 0, 0, 0).carregarDados()
+        elif opcao == '12':
+            Produto("", 0, 0, 0).salvarDados()
 
         elif opcao == '13':
-            Produto.salvarDados()
-
-        elif opcao == '14':
-            print("Saindo do sistema... Até logo!")
+            print("👋 Saindo do sistema... Até logo!")
             break
 
         else: 
-            print("Opção inválida!")
+            print("⚠️  Opção inválida!")
 
 
 if __name__ == "__main__": 
