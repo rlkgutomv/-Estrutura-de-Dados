@@ -8,7 +8,7 @@ historico = Pilha()
 
 
 class Cliente:
-    def __init__(self, nome, identidadeCliente):#Certo
+    def __init__(self, nome, identidadeCliente):
         self.nome = nome
         self.identidadeCliente = identidadeCliente
 
@@ -31,7 +31,7 @@ class Produto:
         self.quantidade = quantidade
         self.preco = preco
 
-    def cadastrarProduto(self): #certo
+    def cadastrarProduto(self):
         if self.identidadeProduto in [p.identidadeProduto for p in estoque]:
             print("Produto com ID já cadastrado.")
             return False
@@ -90,7 +90,47 @@ class Produto:
             print(f"Cliente {nome} (ID {cliente_id}) gastou R${total:.2f}")
 
     def carregarDados(self):
-        pass
+        # Carregar clientes
+        try:
+            with open("clientes.txt", "r", encoding="utf-8") as f:
+                for linha in f:
+                    partes = linha.strip().split(";")
+                    if len(partes) == 2:
+                        nome = partes[0]
+                        identidadeCliente = int(partes[1])
+                        if identidadeCliente not in [c.identidadeCliente for c in cliente]:
+                            cliente.append(Cliente(nome, identidadeCliente))
+            print("Clientes carregados com sucesso!")
+        except FileNotFoundError:
+            print("Arquivo clientes.txt não encontrado.")
+
+        # Carregar produtos
+        try:
+            with open("produtos.txt", "r", encoding="utf-8") as f:
+                for linha in f:
+                    partes = linha.strip().split(";")
+                    if len(partes) == 4:
+                        nome = partes[0]
+                        identidadeProduto = int(partes[1])
+                        quantidade = int(partes[2])
+                        preco = float(partes[3])
+                        if identidadeProduto not in [p.identidadeProduto for p in estoque]:
+                            estoque.append(Produto(nome, identidadeProduto, quantidade, preco))
+            print("Produtos carregados com sucesso!")
+        except FileNotFoundError:
+            print("Arquivo produtos.txt não encontrado.")
+
+    @staticmethod
+    def salvarDados():
+        # Salvar clientes
+        with open("clientes.txt", "w", encoding="utf-8") as f:
+            for c in cliente:
+                f.write(f"{c.nome};{c.identidadeCliente}\n")
+        # Salvar produtos
+        with open("produtos.txt", "w", encoding="utf-8") as f:
+            for p in estoque:
+                f.write(f"{p.nome};{p.identidadeProduto};{p.quantidade};{p.preco}\n")
+        print("Dados salvos com sucesso em clientes.txt e produtos.txt!")
 
 
 def menu():
@@ -108,7 +148,8 @@ def menu():
         print("10. Exibir clientes e valores totais gastos")
         print("11. Pesquisar produto por nome ou ID")
         print("12. Carregar dados de clientes e produtos de arquivos")
-        print("13. Sair")
+        print("13. Salvar dados de clientes e produtos em arquivos")
+        print("14. Sair")
         print("==================================")
         opcao = input("Escolha uma opção: ")
         print("==================================")
@@ -201,6 +242,9 @@ def menu():
             Produto("", 0, 0, 0).carregarDados()
 
         elif opcao == '13':
+            Produto.salvarDados()
+
+        elif opcao == '14':
             print("Saindo do sistema... Até logo!")
             break
 
