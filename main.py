@@ -7,12 +7,10 @@ vendas = Fila()
 historico = Pilha()
 
 
-
 class Cliente:
     def __init__(self, nome, identidadeCliente):#Certo
         self.nome = nome
         self.identidadeCliente = identidadeCliente
-
 
     def cadastrarCliente(self, nome, identidadeCliente):
         self.identidadeCliente = identidadeCliente
@@ -25,6 +23,7 @@ class Cliente:
             print("Cliente cadastrado com sucesso!")
             return True
 
+
 class Produto:
     def __init__(self, nome, identidadeProduto, quantidade, preco): 
         self.nome = nome
@@ -33,17 +32,18 @@ class Produto:
         self.preco = preco
 
     def cadastrarProduto(self): #certo
-        if self.identidadeProduto in [p.identidade for p in estoque]:
+        if self.identidadeProduto in [p.identidadeProduto for p in estoque]:
             print("Produto com ID já cadastrado.")
             return False
         else:
             estoque.append(self)
             print("Produto cadastrado com sucesso!")
+            return True
             
     def RealizarVendas(self, identidadeProduto, quantidade, identidadeCliente):
         if identidadeCliente not in [c.identidadeCliente for c in cliente]:
-                print("Cliente não cadastrado. Cadastre o cliente antes de realizar uma venda.")
-                return
+            print("Cliente não cadastrado. Cadastre o cliente antes de realizar uma venda.")
+            return
         for p in estoque:
             if p.identidadeProduto == identidadeProduto:
                 if p.quantidade >= quantidade:
@@ -59,7 +59,6 @@ class Produto:
                     return
         print("Produto não encontrado.")
 
-
     def exibirValorTotalEstoque(self):
         totalEstoque = sum(p.quantidade * p.preco for p in estoque)
         print(f"Valor total do estoque: R${totalEstoque:.2f}")
@@ -71,15 +70,28 @@ class Produto:
     def pesquisarProduto(self, nomeProduto):
         if not estoque:
             print("Nenhum produto cadastrado.")
-        else:
-            for p in estoque:
-                if p.nome == nomeProduto or p.id == nomeProduto:
-                    print(f"Produto encontrado: Nome: {p.nome}, ID: {p.id}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
-                    return
-            print("Produto não encontrado.")
+            return
+        for p in estoque:
+            if p.nome.lower() == nomeProduto.lower() or str(p.identidadeProduto) == str(nomeProduto):
+                print(f"Produto encontrado: Nome: {p.nome}, ID: {p.identidadeProduto}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
+                return
+        print("Produto não encontrado.")
+    
+    @staticmethod
+    def exibirClientesComValoresTotais():
+        if not vendas.get_items():
+            print("Nenhuma venda realizada.")
+            return
+        totais = {}
+        for cliente_id, valor in vendas.get_items():
+            totais[cliente_id] = totais.get(cliente_id, 0) + valor
+        for cliente_id, total in totais.items():
+            nome = next((c.nome for c in cliente if c.identidadeCliente == cliente_id), "Desconhecido")
+            print(f"Cliente {nome} (ID {cliente_id}) gastou R${total:.2f}")
 
     def carregarDados(self):
         pass
+
 
 def menu():
     while True:
@@ -101,7 +113,7 @@ def menu():
         opcao = input("Escolha uma opção: ")
         print("==================================")
 
-        if opcao == '1':  #Certo
+        if opcao == '1': 
             nome = input("Nome do cliente: ")
             try:
                 identidadeCliente = int(input("ID do cliente: "))
@@ -113,11 +125,10 @@ def menu():
 
         elif opcao == '2': 
             if not cliente:
-             print("Nenhum cliente cadastrado.")
+                print("Nenhum cliente cadastrado.")
             else:
                 for c in cliente:
                     print(f"Nome: {c.nome}, ID: {c.identidadeCliente}")    
-
 
         elif opcao == '3':
             nome = input("Nome do produto: ")
@@ -127,12 +138,10 @@ def menu():
                 preco = float(input("Preço: "))
             except ValueError:
                 print("Erro: insira valores numéricos válidos para ID, quantidade e preço.")
-                
             else:
                 p = Produto(nome, identidadeProduto, quantidade, preco)
                 p.cadastrarProduto()
                 
-
         elif opcao == '4':
             if not estoque:
                 print("Nenhum produto cadastrado.")
@@ -151,7 +160,6 @@ def menu():
             info = Produto("", identidadeProduto, 0, 0)
             info.RealizarVendas(identidadeProduto, quantidade, identidadeCliente)
             
-
         elif opcao == '6':
             if not vendas.get_items():
                 print("Nenhuma venda realizada.")
@@ -163,8 +171,7 @@ def menu():
         elif opcao == '7':
             if historico.is_empty():
                 print("Nenhuma venda para desfazer.")
-                return
-    
+                continue
             ultimaVenda = historico.pop()
             if ultimaVenda in vendas.get_items():
                 vendas.get_items().remove(ultimaVenda)
@@ -178,29 +185,28 @@ def menu():
                 Produto.exibirValorTotalEstoque(totalEstoque) 
 
         elif opcao == '9':
-            if not vendas:
+            if not vendas.get_items():
                 print("Nenhuma venda realizada.")
             else:
                 Produto.exibirTotalVendas(vendas)
 
         elif opcao == '10': 
             Produto.exibirClientesComValoresTotais() 
-
+            
         elif opcao == '11': 
             nomeProduto = input("Digite o nome ou ID do produto: ") 
-            Produto.pesquisarProduto(nomeProduto)
+            Produto("", 0, 0, 0).pesquisarProduto(nomeProduto)
 
         elif opcao == '12': 
-            Produto.carregarDados()
+            Produto("", 0, 0, 0).carregarDados()
 
         elif opcao == '13':
-            print("Saindo...")
-            exit()
+            print("Saindo do sistema... Até logo!")
+            break
 
         else: 
             print("Opção inválida!")
 
+
 if __name__ == "__main__": 
     menu()
-    
-    #testar commit 
