@@ -69,7 +69,7 @@ class Produto:
         print(f"Valor total de vendas realizadas: R${total:.2f}")
 
     def pesquisarProduto(self, nomeProduto):
-        if estoque == None:
+        if not estoque:
             print("Nenhum produto cadastrado.")
         else:
             for p in estoque:
@@ -202,6 +202,5 @@ def menu():
 
 if __name__ == "__main__": 
     menu()
-
-
-
+    
+    #testar commit 
