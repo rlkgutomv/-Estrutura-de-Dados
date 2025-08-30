@@ -6,10 +6,7 @@ Matéria: ORGANIZAÇÃO E ABSTRAÇÃO NA PROGRAMAÇÃO
 Gustavo Vazzoler  
 João Paulo Passolini  
 Pedro Henrique Renosto  
-Luís Eduardo Moroso  
-Felipe Luza  
-Léo Zoldan  
-Arthur Marcolim  
+Luís Eduardo Moroso   
 
 Descrição  
 Este trabalho consiste em desenvolver um mini sistema de estoque e vendas utilizando os conceitos de Programação Orientada a Objetos (POO) e estruturas de dados clássicas: Lista, Pilha e Fila.  
