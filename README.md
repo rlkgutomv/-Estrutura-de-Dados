@@ -33,6 +33,3 @@ Conceitos Aplicados
 - Lista: Utilizada para armazenar os produtos do estoque.  
 - Pilha: Utilizada no histórico de operações (última operação no topo → desfazer).  
 - Fila: Utilizada para organizar as vendas, seguindo a lógica FIFO (First In, First Out).  
-
-Execução  
-python minisistema.py  
